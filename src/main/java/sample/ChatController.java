@@ -12,13 +12,14 @@ public class ChatController {
     ChatApiClient apiClient = new ChatApiClient();
 
     static JsonObject lobby;
+    static JsonObject createLob;
 
 
 
     public void doLogin(String lobbyName, String username) {
 
      lobby = Lobby.toJson(new Lobby(lobbyName, username));
-     apiClient.createLobby(lobby);
+     createLob = apiClient.createLobby(lobby);
 
     }
 
@@ -30,9 +31,13 @@ public class ChatController {
         return lobby.getString("username");
     }
 
-    public void sendMessage(String lobby, String username, String text) {
+    public UUID getId(){
+        return UUID.fromString(createLob.getString("id"));
+    }
 
-        JsonObject object = Message.toJson(new Message(lobby, username, text));
+    public void sendMessage(UUID lobbyId, String username, String text) {
+
+        JsonObject object = Message.toJson(new Message(lobbyId, username, text));
         apiClient.sendMsg(object);
     }
 }
