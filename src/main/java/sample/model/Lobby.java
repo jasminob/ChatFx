@@ -12,7 +12,6 @@ public class Lobby {
 
     public static Lobby fromJson(JsonObject object) {
 
-        UUID lobbyId = UUID.fromString(object.getString("id"));
         String name = object.getString("lobbyName");
         String username = object.getString("username");
 
